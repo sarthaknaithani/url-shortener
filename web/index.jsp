@@ -9,12 +9,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>URL-SHORTENER</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        Enter Long URL:-><input type="text" placeholder="Paste your long url" name="longurl">
     </body>
     <form action="get_request">
-        <Input type="submit">
+        <Input type="submit" value="Generate Short URL...">
     </form>
 </html>
