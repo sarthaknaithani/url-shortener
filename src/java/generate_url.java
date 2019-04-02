@@ -12,14 +12,16 @@ public class generate_url {
         ResultSet rs=null;
         String query="Select id from url_data where long_url='"+longurl+"'";
         rs=st.executeQuery(query);
-        if(rs!=null)
+       
+                
+        if(rs.next()==true)
         {
             id=UUID.fromString(rs.getString("id"));
         }
         else
         {
           UUID uid = UUID.randomUUID();
-       st.execute("Insert into data values('"+uid+"','"+longurl+"')"); 
+       st.execute("Insert into url_data values('"+longurl+"','"+uid+"')"); 
        id=uid;
         }
         }
@@ -30,5 +32,8 @@ public class generate_url {
         }
        return id; 
     }
-    
+    public String getShortUrl(String long_url,String servername, int portnumber){
+    UUID id=get_Id(long_url);
+    return "http://"+servername+":"+portnumber+"/"+id;
+    }
 }

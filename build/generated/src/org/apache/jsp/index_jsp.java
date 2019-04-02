@@ -51,11 +51,13 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("        <title>URL-SHORTENER</title>\n");
       out.write("    </head>\n");
       out.write("    <body>\n");
-      out.write("        Enter Long URL:-><input type=\"text\" placeholder=\"Paste your long url\" name=\"longurl\">\n");
-      out.write("    </body>\n");
+      out.write("      \n");
+      out.write("   \n");
       out.write("    <form action=\"get_request\">\n");
+      out.write("          Enter Long URL:-><input type=\"text\" placeholder=\"Paste your long url\" name=\"longurl\">\n");
       out.write("        <Input type=\"submit\" value=\"Generate Short URL...\">\n");
       out.write("    </form>\n");
+      out.write("    </body>\n");
       out.write("</html>\n");
     } catch (Throwable t) {
       if (!(t instanceof SkipPageException)){

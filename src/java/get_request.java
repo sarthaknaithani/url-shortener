@@ -16,12 +16,11 @@ public class get_request extends HttpServlet {
        PrintWriter out=response.getWriter();
        String long_url=request.getParameter("longurl");
         String a = (request.getRequestURI());
-       out.println(long_url);
        generate_url u=new generate_url();
        UUID uid=u.get_Id(long_url);
-       
-       out.println(uid);
-       out.println(long_url);
+       String servername=request.getServerName();
+       int portnumber=request.getServerPort();
+     out.println(u.getShortUrl(long_url,servername,portnumber));
     }
       @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
