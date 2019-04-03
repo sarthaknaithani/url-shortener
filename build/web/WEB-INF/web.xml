@@ -4,9 +4,17 @@
         <servlet-name>get_request</servlet-name>
         <servlet-class>get_request</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>retrieve</servlet-name>
+        <servlet-class>retrieve</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>get_request</servlet-name>
         <url-pattern>/get_request</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>retrieve</servlet-name>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

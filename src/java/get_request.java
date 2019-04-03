@@ -20,7 +20,10 @@ public class get_request extends HttpServlet {
        UUID uid=u.get_Id(long_url);
        String servername=request.getServerName();
        int portnumber=request.getServerPort();
-     out.println(u.getShortUrl(long_url,servername,portnumber));
+       String contextpath=request.getContextPath();
+      out.println("YOUR SHORT URL IS --->"); 
+     out.println(u.getShortUrl(long_url,servername,portnumber,contextpath));
+     
     }
       @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

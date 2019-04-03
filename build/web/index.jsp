@@ -12,8 +12,6 @@
         <title>URL-SHORTENER</title>
     </head>
     <body>
-      
-   
     <form action="get_request">
           Enter Long URL:-><input type="text" placeholder="Paste your long url" name="longurl">
         <Input type="submit" value="Generate Short URL...">
