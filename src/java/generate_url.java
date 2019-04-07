@@ -2,6 +2,7 @@ import java.sql.*;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.math.BigInteger;
 public class generate_url {
       public Connection getConnection()throws ClassNotFoundException,SQLException
         {
@@ -9,39 +10,85 @@ public class generate_url {
         Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/url_shortner","root","12345");
         return con;
         }
-    public UUID get_Id(String longurl)
+      public String get_62base(BigInteger b)
+      {
+          int n,a,r;
+          String str="";
+          String map[]=new String[]{"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","0","1","2","3","4","5","6","7","8","9"};
+           n=b.intValue();
+           while(n>0)
+           {
+             r=n%62;
+             str=str+map[r];
+             n=n/62;  
+           }
+          return str;     
+      }
+    public String get_Id(String longurl)throws ClassNotFoundException,SQLException
     {
-        UUID id=null;
+      BigInteger b=new BigInteger("0");
+        String s=null;
       Connection con=null;
+      ResultSet rs=null;
+      Statement st=null;
         try
         {
         con=getConnection();  
-        Statement st=con.createStatement();
-        ResultSet rs=null;
-        String query="Select id from url_data where long_url='"+longurl+"'";
+        st=con.createStatement();
+        
+      
+        String query="Select * from url_data where long_url='"+longurl+"'";
+        
         rs=st.executeQuery(query);
        
                 
         if(rs.next()==true)
         {
-            id=UUID.fromString(rs.getString("id"));
+        s=rs.getString("uid");
         }
+        
+        
         else
-        {
-          UUID uid = UUID.randomUUID();
-       st.execute("Insert into url_data values('"+longurl+"','"+uid+"')"); 
-       id=uid;
+        { 
+       
+        Connection con1=getConnection();
+      ResultSet rs1;
+      Statement st1=con1.createStatement();;
+   
+      st.execute("Insert into url_data(long_url) values('"+longurl+"')"); 
+       
+       rs1=st1.executeQuery(query);
+       while(rs1.next())
+       {
+        b=new BigInteger(rs1.getString("id"));
+       }
+         s=get_62base(b);
+            st1.execute("update url_data set uid='"+s+"' where long_url='"+longurl+"'"); 
         }
+         
         }
-         catch (SQLException ex) {
+         catch (SQLException | ClassNotFoundException ex) {
             System.out.print(ex.getMessage());
-        } catch (ClassNotFoundException ex) {
-            System.out.print(ex.getMessage());
+            throw ex;
         }
-       return id; 
+          finally {
+          if (rs != null) {
+          rs.close();
+          }
+          if (st != null) {
+          st.close();
+          }
+          if (con != null) {
+          con.close();
+          }
+          }
+        
+        
+     
+       return s; 
     }
-    public String getShortUrl(String long_url,String servername, int portnumber,String contextpath){
-    UUID id=get_Id(long_url);
+    public String getShortUrl(String longurl,String servername, int portnumber,String contextpath)throws ClassNotFoundException,SQLException{
+    String id=get_Id(longurl);
     return "http://"+servername+":"+portnumber+contextpath+"/"+id;
     }
     public String getLongUrl(String uid)
@@ -57,7 +104,7 @@ public class generate_url {
       {
       con=getConnection();
       st=con.createStatement();
-      rs=st.executeQuery("Select long_url from url_data where id='"+uid+"'");
+      rs=st.executeQuery("Select long_url from url_data where uid='"+uid+"'");
       while(rs.next())
       {
           longurl=rs.getString("long_url");
