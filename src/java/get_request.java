@@ -1,13 +1,10 @@
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigInteger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 public class get_request extends HttpServlet {
@@ -40,7 +37,8 @@ public class get_request extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(get_request.class.getName()).log(Level.SEVERE, null, ex);
+              PrintWriter out=response.getWriter();
+              out.println("Error:---"+ex.getMessage());
         }
         
       
