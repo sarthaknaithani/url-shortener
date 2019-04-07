@@ -13,7 +13,7 @@ public class generate_url {
       public String get_62base(BigInteger b)
       {
           int n,a,r;
-          String str="";
+          String str="",str1="";
           String map[]=new String[]{"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","0","1","2","3","4","5","6","7","8","9"};
            n=b.intValue();
            while(n>0)
@@ -22,7 +22,11 @@ public class generate_url {
              str=str+map[r];
              n=n/62;  
            }
-          return str;     
+          for(int i=(str.length()-1);i>=0;i--)
+          {
+              str1=str1+str.charAt(i);
+          }
+          return str1;     
       }
     public String get_Id(String longurl)throws ClassNotFoundException,SQLException
     {
